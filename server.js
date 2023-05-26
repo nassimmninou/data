@@ -1,19 +1,17 @@
-const express =require("express")
-const app=express()
-const cors = require ("cors")
-app.use(cors())
+const express = require("express");
+const app = express();
+const cors = require("cors");
 
-const mongoose=require("mongoose")
-mongoose.connect("mongodb+srv://ilyasbennane155:ILYASSyoussefNASSIM@cluster0.e5i83it.mongodb.net/restaurantsDB?retryWrites=true&w=majority")
+app.use(cors());
 
-const RestaurantModel=require('./models/restaurants')
-  
-app.get("/restaurants/:city", async (req, res) => {
-    const Restaurants = await RestaurantModel.find({ ci: req.params.city });
-    res.json(Restaurants);
-  });
-  
+const mongoose = require("mongoose");
+mongoose.connect("mongodb+srv://ilyasbennane155:ILYASSyoussefNASSIM@cluster0.e5i83it.mongodb.net/restaurantsDB?retryWrites=true&w=majority");
 
-app.listen("3001",()=>{
-    console.log("Server works !!")
-})
+const RestaurantModel = require("./models/restaurants");
+
+app.get("/api/restaurants/:city", async (req, res) => {
+  const Restaurants = await RestaurantModel.find({ ci: req.params.city });
+  res.json(Restaurants);
+});
+
+module.exports = app;
